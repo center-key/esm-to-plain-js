@@ -4,20 +4,16 @@
 // Imports
 import { assertDeepStrictEqual } from 'assert-deep-strict-equal';
 import assert from 'assert';
-import fs from 'fs';
-import slash from 'slash';
+import fs     from 'fs';
 
 // Setup
 import { esmToPlainJs } from '../dist/esm-to-plain-js.js';
-
-// Utilities
-const readFolder = (folder) => fs.readdirSync(folder).map(file => slash(file)).sort();
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 describe('The "dist" folder', () => {
 
    it('contains the correct files', () => {
-      const actual = readFolder('dist');
+      const actual = fs.readdirSync('dist').sort();
       const expected = [
          'esm-to-plain-js.d.ts',
          'esm-to-plain-js.js',
@@ -51,7 +47,7 @@ describe('Calling esmToPlainJs.transform()', () => {
    esmToPlainJs.transform('source/web-app.esm.js', 'target/web-app.js', options);
 
    it('creates the correct target file', () => {
-      const actual =   readFolder('spec/fixtures/target');
+      const actual =   fs.readdirSync('spec/fixtures/target').sort();
       const expected = ['web-app.js'];
       assertDeepStrictEqual(actual, expected);
       });
