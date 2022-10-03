@@ -1,6 +1,6 @@
 {
    "name": "esm-to-plain-js",
-   "version": "0.0.0",
+   "version": "0.0.1",
    "description": "Simplistic string substitution to replace export with a globalThis assignment (CLI tool designed for use in npm scripts)",
    "license": "MIT",
    "type": "module",
@@ -76,7 +76,7 @@
    },
    "devDependencies": {
       "@types/fancy-log": "~2.0",
-      "@types/node": "~18.7",
+      "@types/node": "~18.8",
       "@typescript-eslint/eslint-plugin": "~5.38",
       "@typescript-eslint/parser": "~5.38",
       "add-dist-header": "~0.3",
