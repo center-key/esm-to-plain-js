@@ -29,13 +29,13 @@ const validFlags =  ['cd', 'quiet'];
 const args =        process.argv.slice(2);
 const flags =       args.filter(arg => /^--/.test(arg));
 const flagMap =     Object.fromEntries(flags.map(flag => flag.replace(/^--/, '').split('=')));
+const flagOn =      Object.fromEntries(validFlags.map(flag => [flag, flag in flagMap]));
 const invalidFlag = Object.keys(flagMap).find(key => !validFlags.includes(key));
 const params =      args.filter(arg => !/^--/.test(arg));
 
 // Data
 const source = params[0];
 const target = params[1];
-const mode =   { quiet: 'quiet' in flagMap };
 
 // Reporting
 const printReport = (result) => {
@@ -60,5 +60,5 @@ const options = {
    cd: flagMap.cd ?? null,
    };
 const result = esmToPlainJs.transform(source, target, options);
-if (!mode.quiet)
+if (!flagOn.quiet)
    printReport(result);
