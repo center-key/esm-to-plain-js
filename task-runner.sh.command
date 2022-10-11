@@ -1,8 +1,8 @@
 #!/bin/bash
-##################
-# Task Runner    #
+###################
+# Task Runner     #
 # esm-to-plain-js #
-##################
+###################
 
 # To make this file runnable:
 #     $ chmod +x *.sh.command

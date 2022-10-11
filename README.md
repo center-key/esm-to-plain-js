@@ -8,7 +8,7 @@ _Simplistic string substitution to replace export with a globalThis assignment (
 [![Vulnerabilities](https://snyk.io/test/github/center-key/esm-to-plain-js/badge.svg)](https://snyk.io/test/github/center-key/esm-to-plain-js)
 [![Build](https://github.com/center-key/esm-to-plain-js/workflows/build/badge.svg)](https://github.com/center-key/esm-to-plain-js/actions/workflows/run-spec-on-push.yaml)
 
-**esm-to-plain-js** transforms an ES modules file into a plain JavaScript file for browsers by commenting out the imports and replacing the export statement wth globalThis assignments.
+**esm-to-plain-js** transforms an ES modules file into a plain JavaScript file for browsers by commenting out the imports and replacing the export statement wth globalThis assignments.&nbsp;
 The command's console output includes a timestamp and formatting helpful in build systems.
 
 ## A) Setup
@@ -21,8 +21,9 @@ $ npm install --save-dev esm-to-plain-js
 ### 1. npm scripts
 Run `esm-to-plain-js` from the `"scripts"` section of your **package.json** file.
 
-The **first** parameter is the *source* file.
-The **second** parameter is the *target* file or folder (use the `--folder` flag).
+Parameters:
+* The **first** parameter is the *source* file.
+* The **second** parameter is the *target* file or folder (use the `--folder` flag).
 
 Example **package.json** script:
 ```json
@@ -30,7 +31,6 @@ Example **package.json** script:
       "make-plain-js": "esm-to-plain-js --cd=build web-app.esm.js web-app.js"
    },
 ```
-Try out the first script with the command: `make-plain-js`
 
 ### 2. Global
 You can install **esm-to-plain-js** globally and then run it anywhere directly from the terminal.
@@ -53,7 +53,7 @@ Examples:
    - `esm-to-plain-js web-app.esm.js web-app.js --quite`    &nbsp; Displays no output.
 
 ## C) Application Code
-Even though **esm-to-plain-js** is primarily intended for build scripts, the package can easily be used in ESM and TypeScript projects.
+Even though **esm-to-plain-js** is primarily intended for build scripts, the package can easily be used programmatically in ESM and TypeScript projects.
 
 Example:
 ``` typescript
@@ -67,4 +67,12 @@ See the **TypeScript Declarations** at the top of [esm-to-plain-js.ts](esm-to-pl
 <br>
 
 ---
+**CLI Build Tools**
+   - 🎋 [add-dist-header](https://github.com/center-key/add-dist-header):&nbsp; _Prepend a one-line banner comment (with license notice) to distribution files_
+   - 📄 [copy-file-util](https://github.com/center-key/copy-file-util):&nbsp; _Copy or rename a file with optional package version number_
+   - 📂 [copy-folder-util](https://github.com/center-key/copy-folder-util):&nbsp; _Recursively copy files from one folder to another folder_
+   - 🔍 [replacer-util](https://github.com/center-key/replacer-util):&nbsp; _Find and replace strings or template outputs in text files_
+   - 🔢 [rev-web-assets](https://github.com/center-key/rev-web-assets):&nbsp; _Revision web asset filenames with cache busting content hash fingerprints_
+   - 🚦 [w3c-html-validator](https://github.com/center-key/w3c-html-validator):&nbsp; _Check the markup validity of HTML files using the W3C validator_
+
 [MIT License](LICENSE.txt)
