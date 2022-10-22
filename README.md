@@ -50,7 +50,7 @@ Command-line flags:
 
 Examples:
    - `esm-to-plain-js --cd=build web-app.esm.js web-app.js` &nbsp; Transforms **build/web-app.esm.js** to **build/web-app.js**
-   - `esm-to-plain-js web-app.esm.js web-app.js --quite`    &nbsp; Displays no output.
+   - `esm-to-plain-js web-app.esm.js web-app.js --quiet`    &nbsp; Displays no output.
 
 ## C) Application Code
 Even though **esm-to-plain-js** is primarily intended for build scripts, the package can easily be used programmatically in ESM and TypeScript projects.
@@ -73,6 +73,7 @@ See the **TypeScript Declarations** at the top of [esm-to-plain-js.ts](esm-to-pl
    - 📂 [copy-folder-util](https://github.com/center-key/copy-folder-util):&nbsp; _Recursively copy files from one folder to another folder_
    - 🔍 [replacer-util](https://github.com/center-key/replacer-util):&nbsp; _Find and replace strings or template outputs in text files_
    - 🔢 [rev-web-assets](https://github.com/center-key/rev-web-assets):&nbsp; _Revision web asset filenames with cache busting content hash fingerprints_
+   - 🚆 [run-scripts-util](https://github.com/center-key/run-scripts-util):&nbsp; _Organize npm scripts into named groups of easy to manage commands_
    - 🚦 [w3c-html-validator](https://github.com/center-key/w3c-html-validator):&nbsp; _Check the markup validity of HTML files using the W3C validator_
 
 [MIT License](LICENSE.txt)
