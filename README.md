@@ -46,6 +46,7 @@ Command-line flags:
 | Flag      | Description                                    | Values     |
 | --------- | ---------------------------------------------- | ---------- |
 | `--cd`    | Change working directory before starting copy. | **string** |
+| `--note`  | Place to add a comment only for humans.        | **string** |
 | `--quiet` | Suppress informational messages.               | N/A        |
 
 Examples:
