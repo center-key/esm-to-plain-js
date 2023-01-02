@@ -41,7 +41,7 @@ $ npm install --global esm-to-plain-js
 $ esm-to-plain-js web-app.esm.js web-app.js
 ```
 
-### 3. CLI Flags
+### 3. CLI flags
 Command-line flags:
 | Flag      | Description                                    | Values     |
 | --------- | ---------------------------------------------- | ---------- |
