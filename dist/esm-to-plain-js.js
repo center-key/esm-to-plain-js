@@ -1,4 +1,4 @@
-//! esm-to-plain-js v0.1.1 ~~ https://github.com/center-key/esm-to-plain-js ~~ MIT License
+//! esm-to-plain-js v0.1.2 ~~ https://github.com/center-key/esm-to-plain-js ~~ MIT License
 
 import fs from 'fs';
 import path from 'path';
