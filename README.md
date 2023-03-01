@@ -50,8 +50,11 @@ Command-line flags:
 | `--quiet` | Suppress informational messages.               | N/A        |
 
 Examples:
-   - `esm-to-plain-js --cd=build web-app.esm.js web-app.js` &nbsp; Transforms **build/web-app.esm.js** to **build/web-app.js**
-   - `esm-to-plain-js web-app.esm.js web-app.js --quiet`    &nbsp; Displays no output.
+   - `esm-to-plain-js --cd=build web-app.esm.js web-app.js`<br>
+   Transforms **build/web-app.esm.js** to **build/web-app.js**
+
+   - `esm-to-plain-js web-app.esm.js web-app.js --quiet`<br>
+   Displays no output.
 
 ## C) Application Code
 Even though **esm-to-plain-js** is primarily intended for build scripts, the package can easily be used programmatically in ESM and TypeScript projects.
