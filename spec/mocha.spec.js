@@ -3,11 +3,13 @@
 
 // Imports
 import { assertDeepStrictEqual } from 'assert-deep-strict-equal';
+import { execSync } from 'node:child_process';
 import assert from 'assert';
 import fs     from 'fs';
 
 // Setup
 import { esmToPlainJs } from '../dist/esm-to-plain-js.js';
+const pkg = JSON.parse(fs.readFileSync('package.json', 'utf-8'));
 
 ////////////////////////////////////////////////////////////////////////////////
 describe('The "dist" folder', () => {
@@ -85,6 +87,34 @@ describe('Correct error is thrown', () => {
       const makeBogusCall = () => esmToPlainJs.transform(source);
       const exception =     { message: '[esm-to-plain-js] Must specify a target file.' };
       assert.throws(makeBogusCall, exception);
+      });
+
+   });
+
+////////////////////////////////////////////////////////////////////////////////
+describe('Executing the CLI', () => {
+   const run = (posix) => {
+      const name =    Object.keys(pkg.bin).sort()[0];
+      const command = process.platform === 'win32' ? posix.replaceAll('\\ ', '" "') : posix;
+      execSync(command.replace(name, 'node bin/cli.js'), { stdio: 'inherit' });
+      };
+
+   it('comments out the imports and swaps the export for globalThis', () => {
+      run('esm-to-plain-js --cd=spec/fixtures/source web-app.esm.js ../target/web-app.cli.js');
+      const actual =   fs.readFileSync('spec/fixtures/target/web-app.cli.js', 'utf-8').split('\n');
+      const expected = [
+         '// Ensure library is loaded => import * as R from \'ramda\';',
+         'const webApp = {',
+         '   luckyNumbers: [3, 7, 21, 777],',
+         '   setup() {',
+         '      const elem = globalThis.document.getElementById(\'lucky-num\');',
+         '      elem.innerText = R.last(webApp.luckyNumbers);',
+         '      },',
+         '   };',
+         'globalThis.webApp = webApp;',
+         '',
+         ];
+      assertDeepStrictEqual(actual, expected);
       });
 
    });
