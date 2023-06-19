@@ -62,6 +62,7 @@ Even though **esm-to-plain-js** is primarily intended for build scripts, the pac
 Example:
 ``` typescript
 import { esmToPlainJs } from 'esm-to-plain-js';
+
 const result = esmToPlainJs.transform('build/web-app.esm.js', 'build/web-app.js');
 console.log('Execution time:', result.duration, 'ms');
 ```
