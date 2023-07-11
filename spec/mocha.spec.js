@@ -3,7 +3,7 @@
 
 // Imports
 import { assertDeepStrictEqual } from 'assert-deep-strict-equal';
-import { execSync } from 'node:child_process';
+import { cliArgvUtil } from 'cli-argv-util';
 import assert from 'assert';
 import fs     from 'fs';
 
@@ -92,11 +92,7 @@ describe('Correct error is thrown', () => {
 
 ////////////////////////////////////////////////////////////////////////////////
 describe('Executing the CLI', () => {
-   const run = (posix) => {
-      const name =    Object.keys(pkg.bin).sort()[0];
-      const command = process.platform === 'win32' ? posix.replaceAll('\\ ', '" "') : posix;
-      return execSync(command.replace(name, 'node bin/cli.js'), { stdio: 'inherit' });
-      };
+   const run = (posix) => cliArgvUtil.run(pkg, posix);
 
    it('comments out the imports and swaps the export for globalThis', () => {
       run('esm-to-plain-js --cd=spec/fixtures/source web-app.esm.js ../target/web-app.cli.js');
