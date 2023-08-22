@@ -10,8 +10,8 @@
 //    },
 //
 // Usage from command line:
-//    $ npm install --global esm-to-plain-js
-//    $ esm-to-plain-js web-app.esm.js web-app.js
+//    $ npm install --save-dev esm-to-plain-js
+//    $ npx esm-to-plain-js web-app.esm.js web-app.js
 //
 // Contributors to this project:
 //    $ cd esm-to-plain-js
