@@ -1,13 +1,14 @@
 // esm-to-plain-js ~~ MIT License
 
+// Imports
 import fs    from 'fs';
 import path  from 'path';
 import slash from 'slash';
 
+// Imports
 export type Settings = {
    cd: string,  //change working directory before starting copy
    };
-export type Options = Partial<Settings>;
 export type Result = {
    origin:   string,  //path of source file
    dest:     string,  //path of targe file
@@ -17,7 +18,7 @@ export type Result = {
 
 const esmToPlainJs = {
 
-   transform(sourceFile: string, targetFile: string, options: Options): Result {
+   transform(sourceFile: string, targetFile: string, options?: Partial<Settings>): Result {
       const defaults = {
          cd: null,
          };
