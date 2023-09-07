@@ -55,7 +55,7 @@ Examples:
    Displays no output.
 
 ## C) Application Code
-Even though **esm-to-plain-js** is primarily intended for build scripts, the package can easily be used programmatically in ESM and TypeScript projects.
+Even though **esm-to-plain-js** is primarily intended for build scripts, the package can be used programmatically in ESM and TypeScript projects.
 
 Example:
 ``` typescript

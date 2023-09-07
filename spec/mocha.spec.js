@@ -34,9 +34,13 @@ describe('Library module', () => {
       assertDeepStrictEqual(actual, expected);
       });
 
-   it('has a transform() function', () => {
-      const actual =   { validate: typeof esmToPlainJs.transform };
-      const expected = { validate: 'function' };
+   it('has functions named transform() and reporter()', () => {
+      const module = esmToPlainJs;
+      const actual = Object.keys(module).sort().map(key => [key, typeof module[key]]);
+      const expected = [
+         ['reporter',  'function'],
+         ['transform', 'function'],
+         ];
       assertDeepStrictEqual(actual, expected);
       });
 

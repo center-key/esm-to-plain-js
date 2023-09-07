@@ -1,11 +1,13 @@
 // esm-to-plain-js ~~ MIT License
 
 // Imports
+import chalk from 'chalk';
 import fs    from 'fs';
+import log   from 'fancy-log';
 import path  from 'path';
 import slash from 'slash';
 
-// Imports
+// Types
 export type Settings = {
    cd: string,  //change working directory before starting copy
    };
@@ -64,6 +66,15 @@ const esmToPlainJs = {
          length:   plainJs.length,
          duration: Date.now() - startTime,
          };
+      },
+
+   reporter(result: Result) {
+      const name =   chalk.gray('esm-to-plain-js');
+      const origin = chalk.blue.bold(result.origin);
+      const dest =   chalk.magenta(result.dest);
+      const arrow =  chalk.gray.bold('→');
+      const info =   chalk.white(`(${result.duration}ms)`);
+      log(name, origin, arrow, dest, info);
       },
 
    };

@@ -20,26 +20,14 @@
 //    $ node bin/cli.js --cd=spec/fixtures source/web-app.esm.js target/web-app.js
 
 // Imports
-import { esmToPlainJs } from '../dist/esm-to-plain-js.js';
-import chalk from 'chalk';
-import log   from 'fancy-log';
 import { cliArgvUtil } from 'cli-argv-util';
+import { esmToPlainJs } from '../dist/esm-to-plain-js.js';
 
 // Parameters and flags
 const validFlags = ['cd', 'note', 'quiet'];
 const cli =        cliArgvUtil.parse(validFlags);
 const source =     cli.params[0];
 const target =     cli.params[1];
-
-// Reporting
-const printReport = (result) => {
-   const name =   chalk.gray('esm-to-plain-js');
-   const origin = chalk.blue.bold(result.origin);
-   const dest =   chalk.magenta(result.dest);
-   const arrow =  chalk.gray.bold('→');
-   const info =   chalk.white(`(${result.duration}ms)`);
-   log(name, origin, arrow, dest, info);
-   };
 
 // Copy File
 const error =
@@ -55,4 +43,4 @@ const options = {
    };
 const result = esmToPlainJs.transform(source, target, options);
 if (!cli.flagOn.quiet)
-   printReport(result);
+   esmToPlainJs.reporter(result);
