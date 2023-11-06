@@ -1,6 +1,8 @@
-//! esm-to-plain-js v1.1.0 ~~ https://github.com/center-key/esm-to-plain-js ~~ MIT License
+//! esm-to-plain-js v1.1.1 ~~ https://github.com/center-key/esm-to-plain-js ~~ MIT License
 
+import chalk from 'chalk';
 import fs from 'fs';
+import log from 'fancy-log';
 import path from 'path';
 import slash from 'slash';
 const esmToPlainJs = {
@@ -8,7 +10,7 @@ const esmToPlainJs = {
         const defaults = {
             cd: null,
         };
-        const settings = Object.assign(Object.assign({}, defaults), options);
+        const settings = { ...defaults, ...options };
         const startTime = Date.now();
         const normalize = (folder) => !folder ? '' : slash(path.normalize(folder)).replace(/\/$/, '');
         const startFolder = settings.cd ? normalize(settings.cd) + '/' : '';
@@ -48,6 +50,14 @@ const esmToPlainJs = {
             length: plainJs.length,
             duration: Date.now() - startTime,
         };
+    },
+    reporter(result) {
+        const name = chalk.gray('esm-to-plain-js');
+        const origin = chalk.blue.bold(result.origin);
+        const dest = chalk.magenta(result.dest);
+        const arrow = chalk.gray.bold('→');
+        const info = chalk.white(`(${result.duration}ms)`);
+        log(name, origin, arrow, dest, info);
     },
 };
 export { esmToPlainJs };
