@@ -5,7 +5,7 @@ _Simplistic string substitution to replace export with a globalThis assignment (
 
 [![License:MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/center-key/esm-to-plain-js/blob/main/LICENSE.txt)
 [![npm](https://img.shields.io/npm/v/esm-to-plain-js.svg)](https://www.npmjs.com/package/esm-to-plain-js)
-[![Build](https://github.com/center-key/esm-to-plain-js/workflows/build/badge.svg)](https://github.com/center-key/esm-to-plain-js/actions/workflows/run-spec-on-push.yaml)
+[![Build](https://github.com/center-key/esm-to-plain-js/actions/workflows/run-spec-on-push.yaml/badge.svg)](https://github.com/center-key/esm-to-plain-js/actions/workflows/run-spec-on-push.yaml)
 
 **esm-to-plain-js** transforms an ES modules file into a plain JavaScript file for browsers by commenting out the imports and replacing the export statement wth globalThis assignments.&nbsp;
 The command's console output includes a timestamp and formatting helpful in build systems.
