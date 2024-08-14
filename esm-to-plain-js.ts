@@ -42,10 +42,10 @@ const esmToPlainJs = {
          !sourceExists ?   'Source file does not exist: ' + source :
          !sourceIsFile ?   'Source is not a file: ' + source :
          !target ?         'Must specify a target file.' :
-         badTargetFolder ? 'Target folder cannot be written to: ' + targetFolder :
+         badTargetFolder ? 'Target folder cannot be written to: ' + String(targetFolder) :
          null;
       if (errorMessage)
-         throw Error('[esm-to-plain-js] ' + errorMessage);
+         throw new Error('[esm-to-plain-js] ' + errorMessage);
       const esm = fs.readFileSync(source, 'utf-8');
       const normalizeEol =   /\r/g;
       const normalizeEof =   /\s*$(?!\n)/;

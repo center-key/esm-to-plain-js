@@ -37,7 +37,7 @@ const error =
    !target ?             'Missing target file.' :
    null;
 if (error)
-   throw Error('[esm-to-plain-js] ' + error);
+   throw new Error('[esm-to-plain-js] ' + error);
 const options = {
    cd: cli.flagMap.cd ?? null,
    };
