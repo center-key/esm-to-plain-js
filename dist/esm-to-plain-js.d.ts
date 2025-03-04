@@ -1,4 +1,4 @@
-//! esm-to-plain-js v1.1.3 ~~ https://github.com/center-key/esm-to-plain-js ~~ MIT License
+//! esm-to-plain-js v1.1.4 ~~ https://github.com/center-key/esm-to-plain-js ~~ MIT License
 
 export type Settings = {
     cd: string;
