@@ -31,10 +31,10 @@ const target =     cli.params[1];
 
 // Copy File
 const error =
-   cli.invalidFlag ?     cli.invalidFlagMsg :
-   cli.paramsCount > 2 ? 'Extraneous parameter: ' + cli.params[2] :
-   !source ?             'Missing source file.' :
-   !target ?             'Missing target file.' :
+   cli.invalidFlag ?    cli.invalidFlagMsg :
+   cli.paramCount > 2 ? 'Extraneous parameter: ' + cli.params[2] :
+   !source ?            'Missing source file.' :
+   !target ?            'Missing target file.' :
    null;
 if (error)
    throw new Error('[esm-to-plain-js] ' + error);
