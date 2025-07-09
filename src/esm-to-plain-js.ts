@@ -1,6 +1,7 @@
 // esm-to-plain-js ~~ MIT License
 
 // Imports
+import { EOL } from 'node:os';
 import chalk from 'chalk';
 import fs    from 'fs';
 import log   from 'fancy-log';
@@ -24,10 +25,10 @@ const esmToPlainJs = {
       const defaults = {
          cd: null,
          };
-      const settings = { ...defaults, ...options };
-      const startTime = Date.now();
-      const normalize = (folder: string | null) =>
-         !folder ? '' : slash(path.normalize(folder)).replace(/\/$/, '');
+      const settings =     { ...defaults, ...options };
+      const startTime =    Date.now();
+      const cleanPath =    (folder: string) => slash(path.normalize(folder)).replace(/\/$/, '');
+      const normalize =    (folder: string | null) => !folder ? '' : cleanPath(folder);
       const startFolder =  settings.cd ? normalize(settings.cd) + '/' : '';
       const source =       sourceFile ? normalize(startFolder + sourceFile) : '';
       const sourceExists = source && fs.existsSync(source);
@@ -46,17 +47,14 @@ const esmToPlainJs = {
          null;
       if (errorMessage)
          throw new Error('[esm-to-plain-js] ' + errorMessage);
-      const esm = fs.readFileSync(source, 'utf-8');
-      const normalizeEol =   /\r/g;
-      const normalizeEof =   /\s*$(?!\n)/;
+      const esm =           fs.readFileSync(source, 'utf-8');
+      const importPattern = /^import .*/mg;           //example: "import * as R from 'ramda';"
+      const exportPattern = /^export \{ (.*) \};$/m;  //example: "export { webApp };"
       const replaceImport = (stmt: string) => '// Ensure library is loaded => ' + stmt;
       const toGlobal =      (module: string) => `globalThis.${module} = ${module};`;
-      const replaceExport = (stmt: string, modules: string) => modules.split(', ').map(toGlobal).join('\n');
-      const importPattern = /^import .*/mg;           //example: import * as R from 'ramda';
-      const exportPattern = /^export \{ (.*) \};$/m;  //example: export { webApp };
+      const replaceExport = (stmt: string, modules: string) =>
+         modules.split(', ').map(toGlobal).join(EOL);
       const plainJs = esm
-         .replace(normalizeEol, '')
-         .replace(normalizeEof, '\n')
          .replace(importPattern, replaceImport)
          .replace(exportPattern, replaceExport);
       fs.writeFileSync(target!, plainJs);
