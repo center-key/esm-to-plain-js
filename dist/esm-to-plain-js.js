@@ -1,5 +1,6 @@
-//! esm-to-plain-js v1.1.4 ~~ https://github.com/center-key/esm-to-plain-js ~~ MIT License
+//! esm-to-plain-js v1.1.5 ~~ https://github.com/center-key/esm-to-plain-js ~~ MIT License
 
+import { EOL } from 'node:os';
 import chalk from 'chalk';
 import fs from 'fs';
 import log from 'fancy-log';
@@ -12,7 +13,8 @@ const esmToPlainJs = {
         };
         const settings = { ...defaults, ...options };
         const startTime = Date.now();
-        const normalize = (folder) => !folder ? '' : slash(path.normalize(folder)).replace(/\/$/, '');
+        const cleanPath = (folder) => slash(path.normalize(folder)).replace(/\/$/, '');
+        const normalize = (folder) => !folder ? '' : cleanPath(folder);
         const startFolder = settings.cd ? normalize(settings.cd) + '/' : '';
         const source = sourceFile ? normalize(startFolder + sourceFile) : '';
         const sourceExists = source && fs.existsSync(source);
@@ -31,16 +33,12 @@ const esmToPlainJs = {
         if (errorMessage)
             throw new Error('[esm-to-plain-js] ' + errorMessage);
         const esm = fs.readFileSync(source, 'utf-8');
-        const normalizeEol = /\r/g;
-        const normalizeEof = /\s*$(?!\n)/;
-        const replaceImport = (stmt) => '// Ensure library is loaded => ' + stmt;
-        const toGlobal = (module) => `globalThis.${module} = ${module};`;
-        const replaceExport = (stmt, modules) => modules.split(', ').map(toGlobal).join('\n');
         const importPattern = /^import .*/mg;
         const exportPattern = /^export \{ (.*) \};$/m;
+        const replaceImport = (stmt) => '// Ensure library is loaded => ' + stmt;
+        const toGlobal = (module) => `globalThis.${module} = ${module};`;
+        const replaceExport = (stmt, modules) => modules.split(', ').map(toGlobal).join(EOL);
         const plainJs = esm
-            .replace(normalizeEol, '')
-            .replace(normalizeEof, '\n')
             .replace(importPattern, replaceImport)
             .replace(exportPattern, replaceExport);
         fs.writeFileSync(target, plainJs);
