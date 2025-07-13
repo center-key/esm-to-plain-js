@@ -62,7 +62,7 @@ Example:
 import { esmToPlainJs } from 'esm-to-plain-js';
 
 const result = esmToPlainJs.transform('build/web-app.esm.js', 'build/web-app.js');
-console.log('Execution time:', result.duration, 'ms');
+console.info('Execution time:', result.duration, 'ms');
 ```
 
 See the **TypeScript Declarations** at the top of [esm-to-plain-js.ts](src/esm-to-plain-js.ts) for documentation.
