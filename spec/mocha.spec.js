@@ -2,7 +2,7 @@
 // Mocha Specification Suite
 
 // Imports
-import { assertDeepStrictEqual } from 'assert-deep-strict-equal';
+import { assertDeepStrictEqual, fileToLines } from 'assert-deep-strict-equal';
 import { cliArgvUtil } from 'cli-argv-util';
 import assert from 'assert';
 import fs     from 'fs';
@@ -58,7 +58,7 @@ describe('Calling esmToPlainJs.transform()', () => {
       });
 
    it('comments out the imports and swaps the export for globalThis', () => {
-      const actual =   fs.readFileSync('spec/fixtures/target/web-app.js', 'utf-8').split('\n');
+      const actual = fileToLines('spec/fixtures/target/web-app.js');
       const expected = [
          '// Ensure library is loaded => import * as R from \'ramda\';',
          'const webApp = {',
@@ -69,7 +69,6 @@ describe('Calling esmToPlainJs.transform()', () => {
          '      },',
          '   };',
          'globalThis.webApp = webApp;',
-         '',
          ];
       assertDeepStrictEqual(actual, expected);
       });
@@ -100,7 +99,7 @@ describe('Executing the CLI', () => {
 
    it('comments out the imports and swaps the export for globalThis', () => {
       run('esm-to-plain-js --cd=spec/fixtures/source web-app.esm.js ../target/web-app.cli.js');
-      const actual =   fs.readFileSync('spec/fixtures/target/web-app.cli.js', 'utf-8').split('\n');
+      const actual = fileToLines('spec/fixtures/target/web-app.cli.js');
       const expected = [
          '// Ensure library is loaded => import * as R from \'ramda\';',
          'const webApp = {',
@@ -111,7 +110,6 @@ describe('Executing the CLI', () => {
          '      },',
          '   };',
          'globalThis.webApp = webApp;',
-         '',
          ];
       assertDeepStrictEqual(actual, expected);
       });
