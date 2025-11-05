@@ -10,7 +10,7 @@ import slash from 'slash';
 
 // Types
 export type Settings = {
-   cd: string,  //change working directory before starting copy
+   cd: string | null,  //change working directory before starting copy
    };
 export type Result = {
    origin:   string,  //path of source file
@@ -21,32 +21,36 @@ export type Result = {
 
 const esmToPlainJs = {
 
+   assert(ok: unknown, message: string | null) {
+      if (!ok)
+         throw new Error(`[esm-to-plain-js] ${message}`);
+      },
+
    transform(sourceFile: string, targetFile: string, options?: Partial<Settings>): Result {
-      const defaults = {
+      const defaults: Settings = {
          cd: null,
          };
       const settings =     { ...defaults, ...options };
       const startTime =    Date.now();
-      const cleanPath =    (folder: string) => slash(path.normalize(folder)).replace(/\/$/, '');
-      const normalize =    (folder: string | null) => !folder ? '' : cleanPath(folder);
-      const startFolder =  settings.cd ? normalize(settings.cd) + '/' : '';
-      const source =       sourceFile ? normalize(startFolder + sourceFile) : '';
+      const clean =        (folder: string) => slash(path.normalize(folder)).replace(/\/$/, '');
+      const cleanPath =    (folder: string | null) => !folder ? '' : clean(folder);
+      const startFolder =  settings.cd ? cleanPath(settings.cd) + '/' : '';
+      const source =       sourceFile ? cleanPath(startFolder + sourceFile) : '';
       const sourceExists = source && fs.existsSync(source);
       const sourceIsFile = sourceExists && fs.statSync(source).isFile();
-      const target =       targetFile ? normalize(startFolder + targetFile) : null;
+      const target =       targetFile ? cleanPath(startFolder + targetFile) : null;
       const targetFolder = target ? path.dirname(target) : null;
       if (targetFolder)
          fs.mkdirSync(targetFolder, { recursive: true });
       const badTargetFolder = !targetFolder || !fs.existsSync(targetFolder);
-      const errorMessage =
+      const error =
          !sourceFile ?     'Must specify a source file.' :
          !sourceExists ?   'Source file does not exist: ' + source :
          !sourceIsFile ?   'Source is not a file: ' + source :
          !target ?         'Must specify a target file.' :
          badTargetFolder ? 'Target folder cannot be written to: ' + String(targetFolder) :
          null;
-      if (errorMessage)
-         throw new Error('[esm-to-plain-js] ' + errorMessage);
+      esmToPlainJs.assert(!error, error);
       const esm =           fs.readFileSync(source, 'utf-8');
       const importPattern = /^import .*/mg;           //example: "import * as R from 'ramda';"
       const exportPattern = /^export \{ (.*) \};$/m;  //example: "export { webApp };"

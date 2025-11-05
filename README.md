@@ -47,7 +47,7 @@ Command-line flags:
 | `--note`  | Place to add a comment only for humans.        | **string** |
 | `--quiet` | Suppress informational messages.               | N/A        |
 
-Examples:
+### 4. Examples
    - `esm-to-plain-js --cd=build web-app.esm.js web-app.js`<br>
    Transforms **build/web-app.esm.js** to **build/web-app.js**
 
