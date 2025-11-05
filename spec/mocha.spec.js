@@ -34,11 +34,12 @@ describe('Library module', () => {
       assertDeepStrictEqual(actual, expected);
       });
 
-   it('has functions named transform() and reporter()', () => {
+   it('has functions named assert(), cli(), reporter(), and transform()', () => {
       const module = esmToPlainJs;
       const actual = Object.keys(module).sort().map(key => [key, typeof module[key]]);
       const expected = [
          ['assert',    'function'],
+         ['cli',       'function'],
          ['reporter',  'function'],
          ['transform', 'function'],
          ];

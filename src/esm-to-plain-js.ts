@@ -1,6 +1,7 @@
 // esm-to-plain-js ~~ MIT License
 
 // Imports
+import { cliArgvUtil } from 'cli-argv-util';
 import { EOL } from 'node:os';
 import chalk from 'chalk';
 import fs    from 'fs';
@@ -24,6 +25,26 @@ const esmToPlainJs = {
    assert(ok: unknown, message: string | null) {
       if (!ok)
          throw new Error(`[esm-to-plain-js] ${message}`);
+      },
+
+   cli() {
+      const validFlags = ['cd', 'note', 'quiet'];
+      const cli =        cliArgvUtil.parse(validFlags);
+      const source =     cli.params[0];
+      const target =     cli.params[1];
+      const error =
+         cli.invalidFlag ?    cli.invalidFlagMsg :
+         cli.paramCount > 2 ? 'Extraneous parameter: ' + cli.params[2]! :
+         !source ?            'Missing source file.' :
+         !target ?            'Missing target file.' :
+         null;
+      esmToPlainJs.assert(!error, error);
+      const options = {
+         cd: cli.flagMap.cd ?? null,
+         };
+      const result = esmToPlainJs.transform(source!, target!, options);
+      if (!cli.flagOn.quiet)
+         esmToPlainJs.reporter(result);
       },
 
    transform(sourceFile: string, targetFile: string, options?: Partial<Settings>): Result {
