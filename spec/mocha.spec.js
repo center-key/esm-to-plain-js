@@ -49,17 +49,17 @@ describe('Library module', () => {
 
 ////////////////////////////////////////////////////////////////////////////////
 describe('Calling esmToPlainJs.transform()', () => {
-   const options = { cd: 'spec/fixtures' };
-   esmToPlainJs.transform('source/web-app.esm.js', 'target/web-app.js', options);
+   const options = { cd: 'spec' };
+   esmToPlainJs.transform('fixtures/web-app.esm.js', 'target/web-app.js', options);
 
    it('creates the correct target file', () => {
-      const actual =   fs.readdirSync('spec/fixtures/target').sort();
+      const actual =   fs.readdirSync('spec/target').sort();
       const expected = ['web-app.js'];
       assertDeepStrictEqual(actual, expected);
       });
 
    it('comments out the imports and swaps the export for globalThis', () => {
-      const actual = fileToLines('spec/fixtures/target/web-app.js');
+      const actual = fileToLines('spec/target/web-app.js');
       const expected = [
          '// Ensure library is loaded => import * as R from \'ramda\';',
          'const webApp = {',
@@ -86,7 +86,7 @@ describe('Correct error is thrown', () => {
       });
 
    it('when the "target" file parameter is missing', () => {
-      const source = 'spec/fixtures/source/web-app.esm.js';
+      const source =        'spec/fixtures/web-app.esm.js';
       const makeBogusCall = () => esmToPlainJs.transform(source);
       const exception =     { message: '[esm-to-plain-js] Must specify a target file.' };
       assert.throws(makeBogusCall, exception);
@@ -99,8 +99,8 @@ describe('Executing the CLI', () => {
    const run = (posix) => cliArgvUtil.run(pkg, posix);
 
    it('comments out the imports and swaps the export for globalThis', () => {
-      run('esm-to-plain-js --cd=spec/fixtures/source web-app.esm.js ../target/web-app.cli.js');
-      const actual = fileToLines('spec/fixtures/target/web-app.cli.js');
+      run('esm-to-plain-js --cd=spec/fixtures web-app.esm.js ../target/web-app.cli.js');
+      const actual = fileToLines('spec/target/web-app.cli.js');
       const expected = [
          '// Ensure library is loaded => import * as R from \'ramda\';',
          'const webApp = {',
