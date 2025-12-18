@@ -1,4 +1,19 @@
 // esm-to-plain-js ~~ MIT License
+//
+// Usage in package.json:
+//    "scripts": {
+//       "make-plain-js": "esm-to-plain-js --cd=build web-app.esm.js web-app.js"
+//    },
+//
+// Usage from command line:
+//    $ npm install --save-dev esm-to-plain-js
+//    $ npx esm-to-plain-js web-app.esm.js web-app.js
+//
+// Contributors to this project:
+//    $ cd esm-to-plain-js
+//    $ npm install
+//    $ npm test
+//    $ node bin/cli.js --cd=spec fixtures/web-app.esm.js target/web-app.js
 
 // Imports
 import { cliArgvUtil } from 'cli-argv-util';
@@ -92,12 +107,10 @@ const esmToPlainJs = {
       },
 
    reporter(result: Result) {
-      const name =   chalk.gray('esm-to-plain-js');
-      const origin = chalk.blue.bold(result.origin);
-      const dest =   chalk.magenta(result.dest);
-      const arrow =  chalk.gray.bold('→');
-      const info =   chalk.white(`(${result.duration}ms)`);
-      log(name, origin, arrow, dest, info);
+      const name =     chalk.gray('esm-to-plain-js');
+      const ancestor = cliArgvUtil.calcAncestor(result.origin, result.dest);
+      const info =     chalk.white(`(${result.duration}ms)`);
+      log(name, ancestor.message, info);
       },
 
    };
