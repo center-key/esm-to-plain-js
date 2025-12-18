@@ -1,4 +1,4 @@
-//! esm-to-plain-js v1.2.0 ~~ https://github.com/center-key/esm-to-plain-js ~~ MIT License
+//! esm-to-plain-js v1.2.1 ~~ https://github.com/center-key/esm-to-plain-js ~~ MIT License
 
 import { cliArgvUtil } from 'cli-argv-util';
 import { EOL } from 'node:os';
@@ -73,11 +73,9 @@ const esmToPlainJs = {
     },
     reporter(result) {
         const name = chalk.gray('esm-to-plain-js');
-        const origin = chalk.blue.bold(result.origin);
-        const dest = chalk.magenta(result.dest);
-        const arrow = chalk.gray.bold('→');
+        const ancestor = cliArgvUtil.calcAncestor(result.origin, result.dest);
         const info = chalk.white(`(${result.duration}ms)`);
-        log(name, origin, arrow, dest, info);
+        log(name, ancestor.message, info);
     },
 };
 export { esmToPlainJs };

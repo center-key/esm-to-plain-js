@@ -17,12 +17,16 @@ $ npm install --save-dev esm-to-plain-js
 ```
 
 ## B) Usage
-### 1. npm package.json scripts
-Run `esm-to-plain-js` from the `"scripts"` section of your **package.json** file.
-
+### 1. Synopsis
+```
+esm-to-plain-js [SOURCE] [TARGET]
+```
 Parameters:
 * The **first** parameter is the *source* file.
 * The **second** parameter is the *target* file or folder (use the `--folder` flag).
+
+### 2. npm package.json scripts
+Run `esm-to-plain-js` from the `"scripts"` section of your **package.json** file.
 
 Example **package.json** script:
 ```json
@@ -31,7 +35,7 @@ Example **package.json** script:
    },
 ```
 
-### 2. Command-line npx
+### 3. Command-line npx
 Example terminal commands:
 ```shell
 $ npm install --save-dev esm-to-plain-js
@@ -39,7 +43,7 @@ $ npx esm-to-plain-js web-app.esm.js web-app.js
 ```
 You can also install **esm-to-plain-js** globally (`--global`) and then run it anywhere directly from the terminal.
 
-### 3. CLI flags
+### 4. CLI flags
 Command-line flags:
 | Flag      | Description                                    | Values     |
 | --------- | ---------------------------------------------- | ---------- |
@@ -47,7 +51,7 @@ Command-line flags:
 | `--note`  | Place to add a comment only for humans.        | **string** |
 | `--quiet` | Suppress informational messages.               | N/A        |
 
-### 4. Examples
+### 5. Examples
    - `esm-to-plain-js --cd=build web-app.esm.js web-app.js`<br>
    Transforms **build/web-app.esm.js** to **build/web-app.js**
 
