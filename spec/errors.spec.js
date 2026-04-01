@@ -2,7 +2,7 @@
 // Error Handling Specification Suite
 
 // Imports
-import assert from 'assert';
+import assert from 'node:assert';
 
 // Setup
 import { esmToPlainJs } from '../dist/esm-to-plain-js.js';

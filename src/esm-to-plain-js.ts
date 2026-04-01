@@ -17,11 +17,11 @@
 
 // Imports
 import { cliArgvUtil } from 'cli-argv-util';
-import { EOL } from 'node:os';
 import chalk from 'chalk';
-import fs    from 'fs';
+import fs    from 'node:fs';
 import log   from 'fancy-log';
-import path  from 'path';
+import os    from 'node:os';
+import path  from 'node:path';
 import slash from 'slash';
 
 // Types
@@ -93,7 +93,7 @@ const esmToPlainJs = {
       const replaceImport = (stmt: string) => '// Ensure library is loaded => ' + stmt;
       const toGlobal =      (module: string) => `globalThis.${module} = ${module};`;
       const replaceExport = (stmt: string, modules: string) =>
-         modules.split(', ').map(toGlobal).join(EOL);
+         modules.split(', ').map(toGlobal).join(os.EOL);
       const plainJs = esm
          .replace(importPattern, replaceImport)
          .replace(exportPattern, replaceExport);
