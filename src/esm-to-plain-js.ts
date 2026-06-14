@@ -37,7 +37,7 @@ export type Result = {
 
 const esmToPlainJs = {
 
-   assert(ok: unknown, message: string | null) {
+   assertOk(ok: unknown, message: string | null) {
       if (!ok)
          throw new Error(`[esm-to-plain-js] ${message}`);
       },
@@ -53,7 +53,7 @@ const esmToPlainJs = {
          !source ?            'Missing source file.' :
          !target ?            'Missing target file.' :
          null;
-      esmToPlainJs.assert(!error, error);
+      esmToPlainJs.assertOk(!error, error);
       const options = {
          cd: cli.flagMap.cd ?? null,
          };
@@ -86,7 +86,7 @@ const esmToPlainJs = {
          !target ?         'Must specify a target file.' :
          badTargetFolder ? 'Target folder cannot be written to: ' + String(targetFolder) :
          null;
-      esmToPlainJs.assert(!error, error);
+      esmToPlainJs.assertOk(!error, error);
       const esm =           fs.readFileSync(source, 'utf-8');
       const importPattern = /^import .*/mg;           //example: "import * as R from 'ramda';"
       const exportPattern = /^export \{ (.*) \};$/m;  //example: "export { webApp };"
