@@ -37,6 +37,8 @@ export type Result = {
 
 const esmToPlainJs = {
 
+   version: '{{package.version}}',
+
    assertOk(ok: unknown, message: string | null) {
       if (!ok)
          throw new Error(`[esm-to-plain-js] ${message}`);
@@ -107,10 +109,10 @@ const esmToPlainJs = {
       },
 
    reporter(result: Result) {
-      const name =     chalk.gray('esm-to-plain-js');
-      const ancestor = cliArgvUtil.calcAncestor(result.origin, result.dest);
-      const info =     chalk.white(`(${result.duration}ms)`);
-      log(name, ancestor.message, info);
+      const name =    chalk.gray('esm-to-plain-js');
+      const version = chalk.gray('v' + esmToPlainJs.version);
+      const info =    chalk.blue(`(${result.duration}ms)`);
+      log(name, version, cliArgvUtil.colorizePath(result.dest), info);
       },
 
    };

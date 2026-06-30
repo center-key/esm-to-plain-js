@@ -23,15 +23,28 @@ describe('The "dist" folder', () => {
    });
 
 ////////////////////////////////////////////////////////////////////////////////
-describe('Library module', () => {
+describe('Library version number', () => {
 
-   it('is an object', () => {
-      const actual =   { constructor: esmToPlainJs.constructor.name };
-      const expected = { constructor: 'Object' };
+   it('follows semantic version formatting', () => {
+      const version =  esmToPlainJs.version;
+      const semVer =   /\d+[.]\d+[.]\d+/;
+      const actual =   { version: version, valid: semVer.test(version) };
+      const expected = { version: version, valid: true };
       assertDeepStrictEqual(actual, expected);
       });
 
-   it('has functions named assert(), cli(), reporter(), and transform()', () => {
+   });
+
+////////////////////////////////////////////////////////////////////////////////
+describe('Library module', () => {
+
+   it('is exported as an object', () => {
+      const actual =   { type: typeof esmToPlainJs };
+      const expected = { type: 'object' };
+      assertDeepStrictEqual(actual, expected);
+      });
+
+   it('has the correct properties', () => {
       const module = esmToPlainJs;
       const actual = Object.keys(module).sort().map(key => [key, typeof module[key]]);
       const expected = [
@@ -39,6 +52,7 @@ describe('Library module', () => {
          ['cli',       'function'],
          ['reporter',  'function'],
          ['transform', 'function'],
+         ['version',   'string'],
          ];
       assertDeepStrictEqual(actual, expected);
       });
