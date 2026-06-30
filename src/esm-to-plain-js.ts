@@ -44,26 +44,6 @@ const esmToPlainJs = {
          throw new Error(`[esm-to-plain-js] ${message}`);
       },
 
-   cli() {
-      const validFlags = ['cd', 'note', 'quiet'];
-      const cli =        cliArgvUtil.parse(validFlags);
-      const source =     cli.params[0];
-      const target =     cli.params[1];
-      const error =
-         cli.invalidFlag ?    cli.invalidFlagMsg :
-         cli.paramCount > 2 ? 'Extraneous parameter: ' + cli.params[2]! :
-         !source ?            'Missing source file.' :
-         !target ?            'Missing target file.' :
-         null;
-      esmToPlainJs.assertOk(!error, error);
-      const options = {
-         cd: cli.flagMap.cd ?? null,
-         };
-      const result = esmToPlainJs.transform(source!, target!, options);
-      if (!cli.flagOn.quiet)
-         esmToPlainJs.reporter(result);
-      },
-
    transform(sourceFile: string, targetFile: string, options?: Partial<Settings>): Result {
       const defaults: Settings = {
          cd: null,
@@ -113,6 +93,26 @@ const esmToPlainJs = {
       const version = chalk.gray('v' + esmToPlainJs.version);
       const info =    chalk.blue(`(${result.duration}ms)`);
       log(name, version, cliArgvUtil.colorizePath(result.dest), info);
+      },
+
+   cli() {
+      const validFlags = ['cd', 'note', 'quiet'];
+      const cli =        cliArgvUtil.parse(validFlags);
+      const source =     cli.params[0];
+      const target =     cli.params[1];
+      const error =
+         cli.invalidFlag ?    cli.invalidFlagMsg :
+         cli.paramCount > 2 ? 'Extraneous parameter: ' + cli.params[2]! :
+         !source ?            'Missing source file.' :
+         !target ?            'Missing target file.' :
+         null;
+      esmToPlainJs.assertOk(!error, error);
+      const options = {
+         cd: cli.flagMap.cd ?? null,
+         };
+      const result = esmToPlainJs.transform(source!, target!, options);
+      if (!cli.flagOn.quiet)
+         esmToPlainJs.reporter(result);
       },
 
    };

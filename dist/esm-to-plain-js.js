@@ -1,4 +1,4 @@
-//! esm-to-plain-js v1.2.2 ~~ https://github.com/center-key/esm-to-plain-js ~~ MIT License
+//! esm-to-plain-js v1.2.3 ~~ https://github.com/center-key/esm-to-plain-js ~~ MIT License
 
 import { cliArgvUtil } from 'cli-argv-util';
 import chalk from 'chalk';
@@ -8,27 +8,10 @@ import os from 'node:os';
 import path from 'node:path';
 import slash from 'slash';
 const esmToPlainJs = {
-    assert(ok, message) {
+    version: '1.2.3',
+    assertOk(ok, message) {
         if (!ok)
             throw new Error(`[esm-to-plain-js] ${message}`);
-    },
-    cli() {
-        const validFlags = ['cd', 'note', 'quiet'];
-        const cli = cliArgvUtil.parse(validFlags);
-        const source = cli.params[0];
-        const target = cli.params[1];
-        const error = cli.invalidFlag ? cli.invalidFlagMsg :
-            cli.paramCount > 2 ? 'Extraneous parameter: ' + cli.params[2] :
-                !source ? 'Missing source file.' :
-                    !target ? 'Missing target file.' :
-                        null;
-        esmToPlainJs.assert(!error, error);
-        const options = {
-            cd: cli.flagMap.cd ?? null,
-        };
-        const result = esmToPlainJs.transform(source, target, options);
-        if (!cli.flagOn.quiet)
-            esmToPlainJs.reporter(result);
     },
     transform(sourceFile, targetFile, options) {
         const defaults = {
@@ -53,7 +36,7 @@ const esmToPlainJs = {
                     !target ? 'Must specify a target file.' :
                         badTargetFolder ? 'Target folder cannot be written to: ' + String(targetFolder) :
                             null;
-        esmToPlainJs.assert(!error, error);
+        esmToPlainJs.assertOk(!error, error);
         const esm = fs.readFileSync(source, 'utf-8');
         const importPattern = /^import .*/mg;
         const exportPattern = /^export \{ (.*) \};$/m;
@@ -73,9 +56,27 @@ const esmToPlainJs = {
     },
     reporter(result) {
         const name = chalk.gray('esm-to-plain-js');
-        const ancestor = cliArgvUtil.calcAncestor(result.origin, result.dest);
-        const info = chalk.white(`(${result.duration}ms)`);
-        log(name, ancestor.message, info);
+        const version = chalk.gray('v' + esmToPlainJs.version);
+        const info = chalk.blue(`(${result.duration}ms)`);
+        log(name, version, cliArgvUtil.colorizePath(result.dest), info);
+    },
+    cli() {
+        const validFlags = ['cd', 'note', 'quiet'];
+        const cli = cliArgvUtil.parse(validFlags);
+        const source = cli.params[0];
+        const target = cli.params[1];
+        const error = cli.invalidFlag ? cli.invalidFlagMsg :
+            cli.paramCount > 2 ? 'Extraneous parameter: ' + cli.params[2] :
+                !source ? 'Missing source file.' :
+                    !target ? 'Missing target file.' :
+                        null;
+        esmToPlainJs.assertOk(!error, error);
+        const options = {
+            cd: cli.flagMap.cd ?? null,
+        };
+        const result = esmToPlainJs.transform(source, target, options);
+        if (!cli.flagOn.quiet)
+            esmToPlainJs.reporter(result);
     },
 };
 export { esmToPlainJs };

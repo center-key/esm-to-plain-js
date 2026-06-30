@@ -7,7 +7,7 @@ _Simplistic string substitution to replace export with a globalThis assignment (
 [![npm](https://img.shields.io/npm/v/esm-to-plain-js.svg)](https://www.npmjs.com/package/esm-to-plain-js)
 [![Build](https://github.com/center-key/esm-to-plain-js/actions/workflows/run-spec-on-push.yaml/badge.svg)](https://github.com/center-key/esm-to-plain-js/actions/workflows/run-spec-on-push.yaml)
 
-**esm-to-plain-js** transforms an ES modules file into a plain JavaScript file for browsers by commenting out the imports and replacing the export statement wth globalThis assignments.&nbsp;
+**esm-to-plain-js** transforms an ES modules file into a plain JavaScript file for browsers by commenting out the imports and replacing the export statement wth `globalThis` assignments.&nbsp;
 The command's console output includes a timestamp and formatting helpful in build systems.
 
 ## A) Setup
@@ -65,7 +65,9 @@ Example:
 ``` typescript
 import { esmToPlainJs } from 'esm-to-plain-js';
 
-const result = esmToPlainJs.transform('build/web-app.esm.js', 'build/web-app.js');
+const result =
+   esmToPlainJs.transform('build/web-app.esm.js', 'build/web-app.js');
+
 console.info('Execution time:', result.duration, 'ms');
 ```
 
