@@ -1,4 +1,4 @@
-//! esm-to-plain-js v1.2.3 ~~ https://github.com/center-key/esm-to-plain-js ~~ MIT License
+//! esm-to-plain-js v1.2.4 ~~ https://github.com/center-key/esm-to-plain-js ~~ MIT License
 
 import { cliArgvUtil } from 'cli-argv-util';
 import chalk from 'chalk';
@@ -8,7 +8,7 @@ import os from 'node:os';
 import path from 'node:path';
 import slash from 'slash';
 const esmToPlainJs = {
-    version: '1.2.3',
+    version: '1.2.4',
     assertOk(ok, message) {
         if (!ok)
             throw new Error(`[esm-to-plain-js] ${message}`);
@@ -57,7 +57,7 @@ const esmToPlainJs = {
     reporter(result) {
         const name = chalk.gray('esm-to-plain-js');
         const version = chalk.gray('v' + esmToPlainJs.version);
-        const info = chalk.blue(`(${result.duration}ms)`);
+        const info = chalk.gray(`(${result.duration}ms)`);
         log(name, version, cliArgvUtil.colorizePath(result.dest), info);
     },
     cli() {
