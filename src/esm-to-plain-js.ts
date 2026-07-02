@@ -91,7 +91,7 @@ const esmToPlainJs = {
    reporter(result: Result) {
       const name =    chalk.gray('esm-to-plain-js');
       const version = chalk.gray('v' + esmToPlainJs.version);
-      const info =    chalk.blue(`(${result.duration}ms)`);
+      const info =    chalk.gray(`(${result.duration}ms)`);
       log(name, version, cliArgvUtil.colorizePath(result.dest), info);
       },
 
